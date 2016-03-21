@@ -13,6 +13,8 @@ class LoginController {
             $username = $_POST['user'];
             $password = $_POST['pass'];
         }
+
+        return array();
     }
 
     public function notFoundAction() {

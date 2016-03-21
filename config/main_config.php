@@ -19,6 +19,16 @@ return array(
                     'layout' => 'layout/layout',
                 ),
             ),
+            'login' => array(
+                'route' => 'login',
+                'executable' => array(
+                    'controller' => 'login',
+                    'action' => 'index',
+                ),
+                'options' => array(
+                    'layout' => 'layout/loginLayout',
+                ),
+            ),
             '404' => array(
                 'route' => 'notFound',
                 'executable' => array(
