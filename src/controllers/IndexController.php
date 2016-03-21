@@ -9,17 +9,7 @@ class IndexController {
     }
 
     public function indexAction() {
-        $database = $this->getServiceLocator()->get('Database');
-
-        $user = $database->getUser(array(
-            'user_id' => '1'
-        ));
-
-        $messageService = $this->getServiceLocator()->get('MessageService');
-
-        return new ViewModel(array(
-            'userMessage' => $messageService->getUserMessage($user),
-        ));
+        return array();
     }
 
     public function notFoundAction() {
