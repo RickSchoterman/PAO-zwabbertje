@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="69d753f5-c8d3-430a-a96e-03049fdc1a79" name="Default" comment="basis, first push">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/main_config.php" afterPath="$PROJECT_DIR$/config/main_config.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controllers/IndexController.php" afterPath="$PROJECT_DIR$/src/controllers/IndexController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/Database/Database.php" afterPath="$PROJECT_DIR$/vendor/Database/Database.php" />
     </list>
     <ignored path="PAO-zwabbertje.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,8 +48,8 @@
       <file leaf-file-name="IndexController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controllers/IndexController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+            <state relative-caret-position="195">
+              <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -274,7 +272,7 @@
       <option name="presentableId" value="Default" />
       <updated>1456144013976</updated>
       <workItem from="1460976479310" duration="28000" />
-      <workItem from="1460976511799" duration="2158000" />
+      <workItem from="1460976511799" duration="2475000" />
     </task>
     <task id="LOCAL-00001" summary="basis, first push">
       <created>1456144425389</created>
@@ -308,7 +306,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2186000" />
+    <option name="totallyTimeSpent" value="2503000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -461,8 +459,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controllers/IndexController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+        <state relative-caret-position="195">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
           <folding />
         </state>
       </provider>
