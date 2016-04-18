@@ -61,7 +61,7 @@ class Router {
 
             $routeName = $route['route'];
 
-            $urlParams = split('/', $url);
+            $urlParams = explode('/', $url);
 
             if($routeName == $urlParams[0]) {
                 if(count($urlParams) > 1) {
@@ -84,7 +84,7 @@ class Router {
         foreach($routes as $name => $route) {
             $routeName = $route['route'];
 
-            $urlParams = split('/', $url);
+            $urlParams = explode('/', $url);
 
             if($routeName == $urlParams[0]) {
                 if(count($urlParams) > 1) {

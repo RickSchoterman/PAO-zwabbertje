@@ -9,6 +9,8 @@ class IndexController {
     }
 
     public function indexAction() {
+        
+
         return array();
     }
 
