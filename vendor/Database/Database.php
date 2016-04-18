@@ -93,7 +93,7 @@ class Database {
         $data = array();
 
         $i=0;
-        while($content = mysqli_fetch_array($result, MYSQL_ASSOC)){
+        while($content = mysqli_fetch_array($result)){
             $data[$i] = $content;
             $i++;
         }

@@ -40,14 +40,14 @@ return array(
                 ),
             ),
         ),
-        /*'Database' => array(
+        'Database' => array(
             'connection' => array(
                 'server' => 'localhost',
                 'username' => 'root',
                 'password' => '',
-                'database' => 'site_project',
+                'database' => 'staldegrootekamps_website',
             ),
-        ),*/
+        ),
     ),
     'services' => array(
         'MessageService' => array(
