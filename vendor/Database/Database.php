@@ -58,6 +58,10 @@ class Database {
             $sqlResult = $sqlResult[0];
         }
 
+        if(count($sqlResult) == 0) {
+            $sqlResult = null;
+        }
+
         return $sqlResult;
     }
 

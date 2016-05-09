@@ -12,6 +12,19 @@ class LoginController {
         if ($_POST){
             $username = $_POST['user'];
             $password = $_POST['pass'];
+            
+            $database = $this->getServiceLocator()->get('Database');
+            
+            $user = $database->getUser(array(
+                'user' => $username,
+                'pass' => $password,
+            ));
+            
+            if($user) {
+                //matched
+            } else {
+                //no matches
+            }
         }
 
         return array();
