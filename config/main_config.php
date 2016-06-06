@@ -45,7 +45,7 @@ return array(
                 'server' => 'localhost',
                 'username' => 'root',
                 'password' => '',
-                'database' => '',
+                'database' => 'zwabbertje',
             ),
         ),
     ),
