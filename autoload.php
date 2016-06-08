@@ -1,10 +1,15 @@
 <?php
 
-require 'Main.php';
+namespace Main;
 
-$config = require __DIR__.'/config/main_config.php';
+require 'Loader.php';
 
-$website = new Main($config);
+$config = array(
+    'vendor' => require __DIR__ . '/config/vendor_config.php',
+    'library' => require __DIR__ . '/config/library_config.php',
+);
+
+$website = new Loader($config);
 echo $website->run();
 
 ?>

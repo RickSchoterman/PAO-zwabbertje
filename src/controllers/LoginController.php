@@ -27,7 +27,9 @@ class LoginController {
             }
         }
 
-        return array();
+        return array(
+            
+        );
     }
 
     public function notFoundAction() {

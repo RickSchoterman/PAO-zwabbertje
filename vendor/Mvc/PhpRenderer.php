@@ -1,11 +1,25 @@
 <?php
 
+namespace Mvc;
+
+use Main\Locator;
+use Mvc\Services\PluginManager;
+
 class PhpRenderer {
 
+    protected $pluginManger;
     protected $viewModel;
 
-    public function __construct(ViewModel $model) {
+    public function __construct(ViewModel $model, PluginManager $pluginManger = null) {
+        $this->pluginManger = $pluginManger;
         $this->viewModel = $model;
+    }
+
+    public function __call($func, $arguments) {
+        $pluginManager = $this->pluginManger;
+        if($pluginManager) {
+            return call_user_func_array(array($pluginManager, $func), $arguments);
+        }
     }
 
     public function __get($name) {
@@ -16,7 +30,7 @@ class PhpRenderer {
         $file = __DIR__.'/../../view/'.$template.'.phtml';
 
         if(!file_exists($file)) {
-            throw new Exception('Template '.$template.' not found...');
+            throw new \Exception('Template '.$template.' not found...');
         }
 
         ob_start();

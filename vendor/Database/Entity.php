@@ -1,9 +1,14 @@
 <?php
 
-class Entity {
-    protected $table;
+namespace Database;
 
-    public function __construct($table) {
+class Entity {
+
+    protected $table;
+    public $tableName;
+
+    public function __construct($tableName, $table) {
+        $this->tableName = $tableName;
         $this->setTable($table);
     }
 

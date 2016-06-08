@@ -1,40 +1,66 @@
 <?php
 
+namespace Main;
+
 class Autoloader {
 
     protected $loaded = array();
+    protected $locators;
 
-    public function __construct() {
+    protected $currentEmploy;
+    protected $currentEmployNamespace;
 
+    public function __construct($locators) {
+        $this->locators = $locators;
     }
 
-    public function autoload($path, $locator, $modules, $nested = false) {
-        foreach($modules as $module => $config) {
-            if($this->isLoaded($module)) {
+    public function autoloadEmploys($path, $modules) {
+        foreach($modules as $employ => $config) {
+            if($this->isLoaded($employ)) {
                 continue;
             }
 
-            $modulePath = __DIR__.'/'.$path.'/'.$module;
+            $modulePath = __DIR__ . '/' . $path.'/'.$employ;
 
-            if($nested) {
-                $moduleDir = scandir($modulePath);
+            $this->includePath($modulePath);
 
-                foreach($moduleDir as $file) {
-                    if (substr($file, 0, 1) == '.') {
-                        continue;
-                    }
+            $employObjectName = $employ.'\Employ';
+            $this->currentEmployNamespace = $employ;
+            $this->currentEmploy = new $employObjectName($config);
+            $this->locators['vendor']->add($employ, $this->currentEmploy);
 
-                    include $modulePath.'/'.$file;
-                }
-            } else {
-                include __DIR__.'/'.$path.'/'.$module.'.php';
+            if(is_dir($modulePath.'/Services')) {
+                $this->includePath($modulePath.'/Services', function($serviceName) {
+                    $serviceObjectName = $this->currentEmployNamespace.'\Services\\'.$serviceName;
+                    $this->locators['service']->add($serviceObjectName, new $serviceObjectName());
+                });
             }
 
-            $locator->add($module, new $module($config));
-            $this->isLoaded($module, true);
+            if(is_dir($modulePath.'/Plugins')) {
+                $this->includePath($modulePath.'/Plugins', function($pluginName) {
+                    $pluginObjectName = $this->currentEmployNamespace.'\Plugins\\'.$pluginName;
+                    $this->locators['plugin']->add($pluginObjectName, new $pluginObjectName());
+                });
+            }
+
+            $this->isLoaded($employ, true);
+
+            $this->currentEmploy = null;
         }
 
-        return $locator;
+//        return $this->locators;
+    }
+
+    public function autoloadLibrary($libraryConfig, $libraryDir = 'library') {
+        foreach($libraryConfig as $dir => $files) {
+            foreach($files as $file) {
+                $this->autoloadFile($libraryDir.'/'.$dir.'/'.$file.'.php');
+            }
+        }
+    }
+
+    public function autoloadFile($file) {
+        include $file;
     }
 
     public function isLoaded($module, $boolean = null) {
@@ -48,6 +74,26 @@ class Autoloader {
         }
 
         return false;
+    }
+
+    public function includePath($path, $callback = null) {
+        $dir = scandir($path);
+        foreach($dir as $file) {
+            if (substr($file, 0, 1) == '.') {
+                continue;
+            }
+
+            if(is_dir($path.'/'.$file)) {
+                continue;
+            }
+
+            include $path.'/'.$file;
+
+            if($callback) {
+                $file = pathinfo($path.'/'.$file);
+                $callback($file['filename']);
+            }
+        }
     }
 }
 
