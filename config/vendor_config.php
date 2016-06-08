@@ -13,8 +13,8 @@ return array(
         'home' => array(
             'route' => '',
             'executable' => array(
-                'controller' => 'index',
-                'action' => 'index',
+                'controller' => 'Index',
+                'action' => 'Index',
             ),
             'options' => array(
                 'layout' => 'layout/layout',
@@ -27,7 +27,7 @@ return array(
                 'action' => 'index',
             ),
             'options' => array(
-                'layout' => 'layout/login',
+                'layout' => 'layout/loginLayout',
             ),
             'child-routes' => array(
                 'login' => array(
@@ -37,7 +37,7 @@ return array(
                         'action' => 'login',
                     ),
                     'options' => array(
-                        'layout' => 'layout/login',
+                        'layout' => 'layout/loginLayout',
                     ),
                 ),
                 'logout' => array(
@@ -52,16 +52,6 @@ return array(
                 ),
             ),
         ),
-        'logout' => array(
-            'route' => 'logout',
-            'executable' => array(
-                'controller' => 'login',
-                'action' => 'logout',
-            ),
-            'options' => array(
-                'layout' => 'layout/index',
-            ),
-        ),
         '404' => array(
             'route' => 'notFound',
             'route_type' => '404',
@@ -71,38 +61,6 @@ return array(
             ),
             'options' => array(
                 'layout' => 'layout/layout',
-            ),
-        ),
-        'module' => array(
-            'route' => 'reservation',
-            'executable' => array(
-                'module' => 'reservation',
-                'action' => 'read'
-            ),
-            'options' => array(
-                'layout' => 'layout/layout',
-            ),
-            'child-routes' => array(
-                'create' => array(
-                    'route' => 'create',
-                    'executable' => array(
-                        'module' => 'reservation',
-                        'action' => 'create'
-                    ),
-                    'options' => array(
-                        'layout' => 'layout/layout',
-                    ),
-                ),
-                'read' => array(
-                    'route' => 'read',
-                    'executable' => array(
-                        'module' => 'reservation',
-                        'action' => 'read'
-                    ),
-                    'options' => array(
-                        'layout' => 'layout/layout',
-                    ),
-                ),
             ),
         ),
     ),

@@ -1,53 +1,28 @@
 <?php
 
-class IndexController {
+namespace Main\src\Controller;
 
-    protected $serviceLocator;
+use Library\ControllerModel;
+use Mvc\ViewModel;
 
-    public function __construct(Locator $serviceLocator) {
-        $this->setServiceLocator($serviceLocator);
-    }
-
+class IndexController extends ControllerModel {
     public function indexAction() {
-        $database = $this->getServiceLocator()->get('Database');
+        $router = $this->getServiceLocator()->get('Router\Services\Router');
+        $userManager = $this->getServiceLocator()->get('User\Services\UserManager');
 
-        //$email = $_POST['email'];
-        //$pass = $_POST['pass'];
+        if(!$userManager->hasUser()) {
+            $router->redirect('account');
+        }
 
-        //$user = $database->getUser(array(
-        //    'email' => $email,
-        //    'pass' => $pass
-        //));
+        return array(
 
-        //if($user && count($user) == 1) {
-            //login
-        //} else if(!$user) {
-            //verkeerd username/pass
-        //} else if(count($user) > 1) {
-            //fout database
-        //}
-
-        return array();
+        );
     }
 
     public function notFoundAction() {
-        return array();
-    }
+        return array(
 
-    /**
-     * @return mixed
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * @param mixed $serviceLocator
-     */
-    public function setServiceLocator($serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
+        );
     }
 }
 

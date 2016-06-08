@@ -1,55 +1,50 @@
 <?php
 
-class LoginController {
+namespace Main\src\Controller;
 
-    protected $serviceLocator;
+use Library\ControllerModel;
+use Mvc\ViewModel;
+use User\Authentication;
 
-    public function __construct(Locator $serviceLocator) {
-        $this->setServiceLocator($serviceLocator);
-    }
+class LoginController extends ControllerModel {
+
+    const LOGIN_CALLBACK_ROUTE = 'home';
+
+    const LOGOUT_CALLBACK_ROUTE = 'login';
 
     public function indexAction() {
-        if ($_POST){
-            $username = $_POST['user'];
-            $password = $_POST['pass'];
-            
-            $database = $this->getServiceLocator()->get('Database');
-            
-            $user = $database->getUser(array(
-                'user' => $username,
-                'pass' => $password,
-            ));
-            
-            if($user) {
-                //matched
-            } else {
-                //no matches
-            }
+        $router = $this->getServiceLocator()->get('Router\Services\Router');
+
+        $userManager = $this->getServiceLocator()->get('User\Services\UserManager');
+        if($userManager->hasUser()) {
+            $router->redirect(self::LOGIN_CALLBACK_ROUTE);
         }
 
-        return array(
-            
-        );
-    }
-
-    public function notFoundAction() {
         return array();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
+    public function loginAction() {
+        $router = $this->getServiceLocator()->get('Router\Services\Router');
+        //$sessionManager = $this->getServiceLocator()->get('Session\Services\SessionManager');
+        $userManager = $this->getServiceLocator()->get('User\Services\UserManager');
+
+        $auth = new Authentication($this->getServiceLocator());
+        if($user = $auth->authenticate($_POST['user'], md5($_POST['pass']))) {
+            //$sessionManager->getStorage($this)->set('user', $user);
+            $userManager->login($user);
+            $router->redirect(self::LOGIN_CALLBACK_ROUTE);
+        }
+
+        $router->redirect('login');
     }
 
-    /**
-     * @param mixed $serviceLocator
-     */
-    public function setServiceLocator($serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
+    public function logoutAction() {
+        $router = $this->getServiceLocator()->get('Router\Services\Router');
+        $userManager = $this->getServiceLocator()->get('User\Services\UserManager');
+
+        $userManager->logout();
+
+        $router->redirect(self::LOGOUT_CALLBACK_ROUTE);
     }
 }
 
