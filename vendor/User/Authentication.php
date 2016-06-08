@@ -15,7 +15,9 @@ class Authentication {
         $this->setServiceLocator($serviceLocator);
     }
 
-    public function authenticate($usernameOrEmail, $password, $type = 'username') {
+    public function authenticate($usernameOrEmail, $password) {
+        $type = $this->getType($usernameOrEmail);
+
         $database = $this->getServiceLocator()->get($this->entityManager);
         $user = $database->getUser(array(
             $type => $usernameOrEmail,
@@ -27,6 +29,14 @@ class Authentication {
         }
 
         return false;
+    }
+
+    public function getType($usernameOrEmail) {
+        if(filter_var($usernameOrEmail ,FILTER_VALIDATE_EMAIL) !== false) {
+            return 'email';
+        }
+
+        return 'username';
     }
 
     /**
