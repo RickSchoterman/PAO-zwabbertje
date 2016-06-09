@@ -25,12 +25,10 @@ class LoginController extends ControllerModel {
 
     public function loginAction() {
         $router = $this->getServiceLocator()->get('Router\Services\Router');
-        //$sessionManager = $this->getServiceLocator()->get('Session\Services\SessionManager');
         $userManager = $this->getServiceLocator()->get('User\Services\UserManager');
 
         $auth = new Authentication($this->getServiceLocator());
         if($user = $auth->authenticate($_POST['user'], md5($_POST['pass']))) {
-            //$sessionManager->getStorage($this)->set('user', $user);
             $userManager->login($user);
             $router->redirect(self::LOGIN_CALLBACK_ROUTE);
         }
