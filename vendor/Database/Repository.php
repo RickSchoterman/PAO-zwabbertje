@@ -3,6 +3,7 @@
 namespace Database;
 
 use Database\Entity;
+use MongoDB\Driver\Query;
 
 class Repository
 {
@@ -40,6 +41,25 @@ class Repository
         }
 
         return $sqlResult;
+    }
+
+    public function delete(Entity $object){
+        $queryBuilder = new QueryBuilder();
+        $query = $queryBuilder->remove($object);
+
+        $this->execute($query, false);
+    }
+
+    public function save(Entity $object){
+        $queryBuilder = new QueryBuilder();
+
+        $result = $this->findOneBy(array("id" => $object->getId()));
+
+        if(!empty($result)){
+            $queryBuilder->update($object);
+        }else{
+            $queryBuilder->create($object);
+        }
     }
 
     private function execute($query, $reponse = true) {
