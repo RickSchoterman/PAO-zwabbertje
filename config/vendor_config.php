@@ -10,11 +10,31 @@ return array(
         ),
     ),
     'Router' => array(
-        'home' => array(
+        _DEFAULT => array(
             'route' => '',
             'executable' => array(
                 'controller' => 'Index',
                 'action' => 'Index',
+            ),
+            'options' => array(
+                'layout' => 'layout/layout',
+            ),
+        ),
+        'employees' => array(
+            'route' => 'employees',
+            'executable' => array(
+                'controller' => 'Index',
+                'action' => 'employee',
+            ),
+            'options' => array(
+                'layout' => 'layout/layout',
+            ),
+        ),
+        'schedule'=> array(
+            'route' => 'schedule',
+            'executable' => array(
+                'controller' => 'Index',
+                'action' => 'schedule',
             ),
             'options' => array(
                 'layout' => 'layout/layout',
@@ -52,7 +72,7 @@ return array(
                 ),
             ),
         ),
-        '404' => array(
+        _ERROR => array(
             'route' => 'notFound',
             'route_type' => '404',
             'executable' => array(
@@ -81,6 +101,13 @@ return array(
     //Extern
     'User' => array(
         'table' => 'user',
+        'roles' => array('guest', 'user', 'admin'),
+        'guards' => array(
+            'controller' => array(
+                'guest' => array('login'),
+                'user' => array('login', ''),
+            ),
+        ),
     ),
     'Messenger',
 );

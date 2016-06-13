@@ -20,7 +20,7 @@ class PluginManager {
         $plugins = $this->pluginLocator->getAll();
 
         foreach($plugins as $name => $plugin) {
-            $lowerClassName = strtolower(substr($name, strlen($name)-strlen($pluginName), strlen($name)));
+            $lowerClassName = lcfirst(substr($name, strlen($name)-strlen($pluginName), strlen($name)));
             if($lowerClassName == $pluginName) {
                 return call_user_func_array(array($plugin, '__invoke'), $arguments);
             }

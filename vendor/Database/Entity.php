@@ -9,7 +9,7 @@ class Entity {
 
     public function __construct($tableName, $table) {
         $this->tableName = $tableName;
-        $this->setTable($table);
+        $this->table = $table;
     }
 
     public function __call($name, $arguments) {
@@ -59,23 +59,9 @@ class Entity {
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTable()
-    {
-        return $this->table;
+    public function __properties() {
+        return get_object_vars($this);
     }
-
-    /**
-     * @param mixed $table
-     */
-    public function setTable($table)
-    {
-        $this->table = $table;
-    }
-
-
 }
 
 ?>

@@ -1,0 +1,64 @@
+<?php
+
+namespace Database;
+
+use Database\Entity;
+
+class Repository
+{
+    protected $connection;
+    protected $table;
+
+    public function __construct($connection, $table) {
+        $this->connection = $connection;
+        $this->table = $table;
+    }
+
+    public function findBy($criteria) {
+        return $this->find($criteria);
+    }
+
+    public function findOneBy($criteria) {
+        $result = $this->find($criteria);
+
+        if(empty($result)) {
+            return null;
+        }
+
+        return $result;
+    }
+
+    private function find($criteria) {
+        $queryBuilder = new QueryBuilder();
+        $query = $queryBuilder->find($this->table, $criteria);
+
+        $result = $this->execute($query);
+
+        $sqlResult = array();
+        foreach ($result as $key => $record) {
+            $sqlResult[] = new Entity($this->table, $record);
+        }
+
+        return $sqlResult;
+    }
+
+    private function execute($query, $reponse = true) {
+        $result = mysqli_query($this->connection, $query);
+
+        if(!$reponse) {
+            return;
+        }
+
+        $data = array();
+
+        $i=0;
+        while($content = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $data[$i] = $content;
+            $i++;
+        }
+
+        return $data;
+    }
+}
+
+?>

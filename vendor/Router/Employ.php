@@ -15,11 +15,19 @@ class Employ extends EmployModel implements EmployInterface {
         $this->setConfig($config);
         $url = $_GET['url'];
 
-        $route = $this->getRouteByUrl($url, $config);
+        $route = $this->getRouteByUrl($url);
 
         if(!$route) {
-            if($this->notFoundRoute) {
+            if($url == '') {
+                
+                if(isset($config[_DEFAULT])) {
+                    $this->route = $config[_DEFAULT];
+                }
+                
+            } else if($this->notFoundRoute) {
+                
                 $this->route = $this->notFoundRoute;
+                
             }
         }
 
@@ -70,13 +78,11 @@ class Employ extends EmployModel implements EmployInterface {
         }
     }
 
-    protected function getRouteByUrl($url, $routes = null) {
-        if(!$routes) {
-            $routes = $this->getConfig();
-        }
+    protected function getRouteByUrl($url) {
+        $routes = $this->getConfig();
 
         foreach($routes as $name => $route) {
-            if(isset($route['route_type']) && $route['route_type'] == '404') {
+            if($name == _ERROR) {
                 $this->notFoundRoute = $route;
             }
 
@@ -138,9 +144,13 @@ class Employ extends EmployModel implements EmployInterface {
         return $this->config[$name];
     }
 
+    public function getCurrentRoute() {
+        return $this->route;
+    }
+
     public function redirect($routeName) {
-        $route = $this->getRouteByName($routeName);
-        header('location: /'.$route['route'].' ');
+        $url = $this->getUrlByName($routeName);
+        header('location: ' . $url . ' ');
     }
 
     public function exception($msg) {

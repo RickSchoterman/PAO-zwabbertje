@@ -2,6 +2,9 @@
 
 namespace Main;
 
+define('_DEFAULT', 0);
+define('_ERROR', 404);
+
 require 'Loader.php';
 
 $config = array(

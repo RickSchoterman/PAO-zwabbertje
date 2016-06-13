@@ -18,14 +18,15 @@ class Authentication {
     public function authenticate($usernameOrEmail, $password) {
         $type = $this->getType($usernameOrEmail);
 
-        $database = $this->getServiceLocator()->get($this->entityManager);
-        $user = $database->getUser(array(
+        $entityManager = $this->getServiceLocator()->get($this->entityManager);
+
+        $user = $entityManager->getRepository('User')->findBy(array(
             $type => $usernameOrEmail,
             'password' => $password
         ));
 
         if(count($user) == 1) {
-            return $user;
+            return $user[0];
         }
 
         return false;

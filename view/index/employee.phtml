@@ -1,0 +1,33 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Personal Number</th>
+            <th>Name</th>
+            <th>Street</th>
+            <th>Postal Code</th>
+            <th>Phone Number</th>
+            <th style="text-align: center"><span class="glyphicon glyphicon-open-file" onclick="pdf();"></span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->employees as $employee): ?>
+            <tr>
+                <td><?php echo $employee->getId(); ?></td>
+                <td><?php echo $employee->getPersonalNumber(); ?></td>
+                <td><?php echo $employee->getName(); ?></td>
+                <td><?php echo $employee->getStreet(); ?></td>
+                <td><?php echo $employee->getPostalCode(); ?></td>
+                <td><?php echo $employee->getPhoneNumber(); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<script>
+    
+    function pdf() {
+        
+    }
+    
+</script>

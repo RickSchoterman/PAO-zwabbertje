@@ -8,9 +8,11 @@ use User\Authentication;
 
 class LoginController extends ControllerModel {
 
-    const LOGIN_CALLBACK_ROUTE = 'home';
+    const LOGIN_ROUTE = 'account';
 
-    const LOGOUT_CALLBACK_ROUTE = 'login';
+    const LOGIN_CALLBACK_ROUTE = _DEFAULT;
+
+    const LOGOUT_CALLBACK_ROUTE = 'account/login';
 
     public function indexAction() {
         $router = $this->getServiceLocator()->get('Router\Services\Router');
@@ -33,7 +35,7 @@ class LoginController extends ControllerModel {
             $router->redirect(self::LOGIN_CALLBACK_ROUTE);
         }
 
-        $router->redirect('login');
+        $router->redirect(self::LOGIN_ROUTE);
     }
 
     public function logoutAction() {

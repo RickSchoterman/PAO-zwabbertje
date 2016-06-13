@@ -38,12 +38,6 @@ class Locator {
         return $data;
     }
 
-//    public function attach($name, $arguments, $fn) {
-//        $class = $this->library[$name];
-//        $arguments = array_merge(array($class), $arguments);
-//        $this->library[$name] = call_user_func_array($fn, $arguments);
-//    }
-
     public function inject($serviceLocator) {
         foreach($this->library as $name => $object) {
             $object->inject($serviceLocator);

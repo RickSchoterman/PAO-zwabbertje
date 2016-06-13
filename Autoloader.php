@@ -47,8 +47,6 @@ class Autoloader {
 
             $this->currentEmploy = null;
         }
-
-//        return $this->locators;
     }
 
     public function autoloadLibrary($libraryConfig, $libraryDir = 'library') {
