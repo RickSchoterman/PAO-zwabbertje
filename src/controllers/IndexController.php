@@ -24,28 +24,26 @@ class IndexController extends ControllerModel {
         /* @var $entityManager EntityManager */
         $entityManager = $this->getServiceLocator()->get('Database\Services\EntityManager');
 
-        $employees = $entityManager->getRepository('Employee')->findOneBy(array());
-
         if(isset($_POST['ajax_call'])){
             switch ($_POST['ajax_call']){
-                case "edit":
+                case 'edit':
                     $entityManager->getRepository('Employee')->save($employees);
                     break;
-                case "create":
+                case 'create':
                     $entityManager->getRepository('Employee')->save($employees);
                     break;
-                case "delete":
-                    $entityManager->getRepository('Employee')->delete($employees);
+                case 'delete':
+                    $employee = $entityManager->getRepository('Employee')->findBy(array('id' => $_GET['id']));
+                    $entityManager->getRepository('Employee')->delete($employee);
                     break;
             }
+        } else {
+            $employees = $entityManager->getRepository('Employee')->findOneBy(array());
+
+            return array(
+                'employees' => $employees
+            );
         }
-
-
-        
-
-        return array(
-            'employees' => $employees
-        );
     }
 
     public function scheduleAction() {

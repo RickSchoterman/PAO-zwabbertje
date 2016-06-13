@@ -30,4 +30,25 @@
         
     }
     
+    function AjaxCall(type, id) {
+        $.ajax({
+            method: "POST",
+            url: 'http://zwabbertje.dev/employees?id=' + id,
+            data: { 
+                ajax_call: type
+            }
+        })
+        .done(function( msg ) {
+            //msg
+        });
+    }
+
+    function edit(id) {
+        
+    }
+
+    function remove() {
+
+    }
+    
 </script>

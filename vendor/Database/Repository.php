@@ -43,7 +43,7 @@ class Repository
         return $sqlResult;
     }
 
-    public function delete(Entity $object){
+    public function remove(Entity $object){
         $queryBuilder = new QueryBuilder();
         $query = $queryBuilder->remove($object);
 

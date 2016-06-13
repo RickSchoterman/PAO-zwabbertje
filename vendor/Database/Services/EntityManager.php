@@ -22,8 +22,6 @@ class EntityManager {
     public function getRepository($table) {
         return new Repository($this->connection, $table);
     }
-
-    
 }
 
 ?>
