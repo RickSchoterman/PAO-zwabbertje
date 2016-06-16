@@ -8,7 +8,8 @@
         <?php if($this->form): ?>
             <form action="<?php echo $this->url('account/forgot'); ?>" method="post">
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email" name="email">
+                    <input type="hidden" name="email" value="<?php echo $this->email; ?>">
+                    <input type="email" class="form-control" placeholder="Email" value="<?php echo $this->email ?>" DISABLED>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <hr>

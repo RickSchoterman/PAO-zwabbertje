@@ -34,7 +34,7 @@ class EntityManager {
     public function save(Entity $object){
         $queryBuilder = new QueryBuilder();
 
-        if(property_exists($object, 'id')) {
+        if($object->id) {
             $result = $this->getRepository($object->tableName)->findOneBy(array('id' => $object->getId()));
         }
 

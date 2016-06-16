@@ -51,7 +51,7 @@ return array(
             ),
             'child-routes' => array(
                 'login' => array(
-                    'route' => 'auth',
+                    'route' => 'login',
                     'executable' => array(
                         'controller' => 'login',
                         'action' => 'login',

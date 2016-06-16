@@ -14,7 +14,7 @@ class Entity {
 
     public function __call($name, $arguments) {
         $method = substr($name, 0, 3);
-        $property = substr(lcfirst($name), 3, strlen($name));
+        $property = lcfirst(substr($name, 3, strlen($name)));
 
         switch($method) {
             case 'set':

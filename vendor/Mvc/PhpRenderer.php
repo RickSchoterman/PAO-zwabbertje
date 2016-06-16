@@ -23,7 +23,11 @@ class PhpRenderer {
     }
 
     public function __get($name) {
-        return $this->viewModel->$name;
+        if(isset($this->viewModel->$name)) {
+            return $this->viewModel->$name;
+        }
+
+        return;
     }
 
     public function render($template) {
