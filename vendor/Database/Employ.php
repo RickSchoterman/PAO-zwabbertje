@@ -31,6 +31,24 @@ class Employ extends EmployModel implements EmployInterface {
 
     }
 
+    public function execute($query, $reponse = true) {
+        $result = mysqli_query($this->connection, $query);
+
+        if(!$reponse) {
+            return;
+        }
+
+        $data = array();
+
+        $i=0;
+        while($content = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $data[$i] = $content;
+            $i++;
+        }
+
+        return $data;
+    }
+
     /**
      * @return mixed
      */

@@ -27,6 +27,9 @@ class IndexController extends ControllerModel {
         if(isset($_POST['ajax_call'])){
             switch ($_POST['ajax_call']){
                 case 'edit':
+                    $data = $_POST['data'];
+
+                    $entityManager->getRepository('Employee')->findBy(array('id' => $data));
                     $entityManager->getRepository('Employee')->save($employees);
                     break;
                 case 'create':

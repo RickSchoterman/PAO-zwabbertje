@@ -7,11 +7,11 @@ use MongoDB\Driver\Query;
 
 class Repository
 {
-    protected $connection;
+    protected $employ;
     protected $table;
 
-    public function __construct($connection, $table) {
-        $this->connection = $connection;
+    public function __construct($employ, $table) {
+        $this->employ = $employ;
         $this->table = $table;
     }
 
@@ -33,7 +33,7 @@ class Repository
         $queryBuilder = new QueryBuilder();
         $query = $queryBuilder->find($this->table, $criteria);
 
-        $result = $this->execute($query);
+        $result = $this->employ->execute($query);
 
         $sqlResult = array();
         foreach ($result as $key => $record) {
@@ -41,43 +41,6 @@ class Repository
         }
 
         return $sqlResult;
-    }
-
-    public function remove(Entity $object){
-        $queryBuilder = new QueryBuilder();
-        $query = $queryBuilder->remove($object);
-
-        $this->execute($query, false);
-    }
-
-    public function save(Entity $object){
-        $queryBuilder = new QueryBuilder();
-
-        $result = $this->findOneBy(array("id" => $object->getId()));
-
-        if(!empty($result)){
-            $queryBuilder->update($object);
-        }else{
-            $queryBuilder->create($object);
-        }
-    }
-
-    private function execute($query, $reponse = true) {
-        $result = mysqli_query($this->connection, $query);
-
-        if(!$reponse) {
-            return;
-        }
-
-        $data = array();
-
-        $i=0;
-        while($content = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $data[$i] = $content;
-            $i++;
-        }
-
-        return $data;
     }
 }
 

@@ -12,14 +12,17 @@
     </thead>
     <tbody>
         <?php foreach($this->employees as $employee): ?>
-            <tr>
-                <td><?php echo $employee->getId(); ?></td>
-                <td><?php echo $employee->getPersonalNumber(); ?></td>
-                <td><?php echo $employee->getName(); ?></td>
-                <td><?php echo $employee->getStreet(); ?></td>
-                <td><?php echo $employee->getPostalCode(); ?></td>
-                <td><?php echo $employee->getPhoneNumber(); ?></td>
-            </tr>
+            <form id="employee_form_<?php echo $employee->getId() ?>">
+                <tr>
+                    <td><?php echo $employee->getId(); ?></td>
+                    <td><?php echo $employee->getPersonalNumber(); ?></td>
+                    <td><?php echo $employee->getName(); ?></td>
+                    <td><?php echo $employee->getStreet(); ?></td>
+                    <td><?php echo $employee->getPostalCode(); ?></td>
+                    <td><?php echo $employee->getPhoneNumber(); ?></td>
+                    <td><span class="glyphicon glyphicon-trash" onclick="edit($('#employee_form_<?php echo $employee->getId() ?>'))"></span></td>
+                </tr>
+            </form>
         <?php endforeach; ?>
     </tbody>
 </table>
@@ -30,12 +33,13 @@
         //
     }
     
-    function AjaxCall(type, id) {
+    function AjaxCall(type, data) {
         $.ajax({
             method: "POST",
-            url: 'http://zwabbertje.dev/employees?id=' + id,
+            url: 'http://zwabbertje.dev/employees',
             data: { 
-                ajax_call: type
+                ajax_call: type,
+                data: data
             }
         })
         .done(function( msg ) {
@@ -43,8 +47,8 @@
         });
     }
 
-    function edit(id) {
-        
+    function edit(data) {
+        AjaxCall('edit', data);
     }
 
     function remove() {
