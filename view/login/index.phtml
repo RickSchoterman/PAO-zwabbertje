@@ -24,8 +24,20 @@
 
         <hr>
 
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <p class="login-box-msg">I forgot my password</p>
+        <form action="<?php echo $this->url('account/forgot'); ?>" method="post">
+            <div class="form-group has-feedback">
+                <input type="email" class="form-control" placeholder="Email" name="email">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                </div><!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Forgot</button>
+                </div><!-- /.col -->
+            </div>
+        </form>
 
     </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->

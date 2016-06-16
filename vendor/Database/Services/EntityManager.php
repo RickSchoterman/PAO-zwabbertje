@@ -34,12 +34,16 @@ class EntityManager {
     public function save(Entity $object){
         $queryBuilder = new QueryBuilder();
 
-        $result = $this->findOneBy(array('id' => $object->getId()));
+        if(property_exists($object, 'id')) {
+            $result = $this->getRepository($object->tableName)->findOneBy(array('id' => $object->getId()));
+        }
 
-        if(!empty($result)){
-            $queryBuilder->update($object);
-        }else{
-            $queryBuilder->create($object);
+        if(isset($result) && !empty($result)){
+            $query = $queryBuilder->update($object);
+            $this->employ->execute($query, false);
+        } else {
+            $query = $queryBuilder->create($object);
+            $this->employ->execute($query, false);
         }
     }
 }

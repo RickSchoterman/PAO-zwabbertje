@@ -8,6 +8,7 @@
             <th>Postal Code</th>
             <th>Phone Number</th>
             <th style="text-align: center"><span class="glyphicon glyphicon-open-file" onclick="pdf();"></span></th>
+            <th style="text-align: center"><span class="glyphicon glyphicon-plus" onclick="create()"></span></th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
                     <td><?php echo $employee->getStreet(); ?></td>
                     <td><?php echo $employee->getPostalCode(); ?></td>
                     <td><?php echo $employee->getPhoneNumber(); ?></td>
+                    <td><span class="glyphicon glyphicon-edit" onclick="edit($('#employee_form_<?php echo $employee->getId() ?>'))"></span></td>
                     <td><span class="glyphicon glyphicon-trash" onclick="edit($('#employee_form_<?php echo $employee->getId() ?>'))"></span></td>
                 </tr>
             </form>
@@ -27,28 +29,121 @@
     </tbody>
 </table>
 
+<div id="crudModal" class="modal fade">
+    <form id="crudForm">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="modal-button btn btn-primary"></button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
+
 <script>
-    
-    function pdf() {
-        //
-    }
-    
-    function AjaxCall(type, data) {
+
+    function ajaxCall(type, data) {
         $.ajax({
             method: "POST",
             url: 'http://zwabbertje.dev/employees',
-            data: { 
+            data: {
                 ajax_call: type,
                 data: data
+            },
+            success: function(data) {
+            },
+            error: function(data) {
             }
-        })
-        .done(function( msg ) {
-            //msg
         });
     }
 
-    function edit(data) {
-        AjaxCall('edit', data);
+    function appendForm(modal, data) {
+        var formData = data || null;
+
+        var table = $('<table>');
+        table.addClass('table');
+
+        var tr = $('<tr>');
+        var td = $('<td>');
+
+        var body = modal.find('.modal-body');
+
+        var input = $('<input>');
+        input.addClass('form-control');
+
+        var personalNumber = input.clone();
+        personalNumber.attr('placeholder', 'Personal Number');
+        personalNumber.attr('name', 'personal_number');
+
+        var name = input.clone();
+        name.attr('placeholder', 'Name');
+        name.attr('name', 'name');
+
+        var street = input.clone();
+        street.attr('placeholder', 'Street');
+        street.attr('name', 'street');
+
+        var postalCode = input.clone();
+        postalCode.attr('placeholder', 'Postal Code');
+        postalCode.attr('name', 'postal_code');
+
+        var phoneNumber = input.clone();
+        phoneNumber.attr('placeholder', 'Phone Number');
+        phoneNumber.attr('name', 'phone_number');
+
+        table.append(tr.clone().append(td.clone().append(personalNumber)));
+        table.append(tr.clone().append(td.clone().append(name)));
+        table.append(tr.clone().append(td.clone().append(street)));
+        table.append(tr.clone().append(td.clone().append(postalCode)));
+        table.append(tr.clone().append(td.clone().append(phoneNumber)));
+
+        body.html(table);
+    }
+
+    function pdf() {
+        //
+    }
+
+    function create() {
+        var modal = $('#crudModal');
+
+        appendForm(modal);
+
+        var title = modal.find('.modal-title');
+        title.text('Create an employee');
+
+        var submitButton = modal.find('.modal-button');
+        submitButton.text('Create');
+
+        $('#crudForm').on('submit', function(e) {
+            e.preventDefault();
+
+            /* $(this) -> #crudForm, serialize -> returns data */
+            ajaxCall('create', $(this).serialize());
+
+            modal.modal('toggle');
+        });
+
+        modal.modal();
+    }
+
+    function update(data) {
+        var modal = modal();
+
+        appendForm(modal, 'create');
+
+        ajaxCall('edit', data);
     }
 
     function remove() {

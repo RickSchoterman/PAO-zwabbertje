@@ -26,7 +26,7 @@ class Repository
             return null;
         }
 
-        return $result;
+        return $result[0];
     }
 
     private function find($criteria) {

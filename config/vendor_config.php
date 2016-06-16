@@ -67,7 +67,17 @@ return array(
                         'action' => 'logout',
                     ),
                     'options' => array(
-                        'layout' => 'layout/index',
+                        'layout' => 'layout/loginLayout',
+                    ),
+                ),
+                'forgot' => array(
+                    'route' => 'forgot',
+                    'executable' => array(
+                        'controller' => 'login',
+                        'action' => 'forgot',
+                    ),
+                    'options' => array(
+                        'layout' => 'layout/loginLayout',
                     ),
                 ),
             ),

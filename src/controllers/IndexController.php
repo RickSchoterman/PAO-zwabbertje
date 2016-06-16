@@ -2,6 +2,7 @@
 
 namespace Main\src\Controller;
 
+use Database\Entity;
 use Database\Services\EntityManager;
 use Library\ControllerModel;
 use Mvc\ViewModel;
@@ -27,21 +28,27 @@ class IndexController extends ControllerModel {
         if(isset($_POST['ajax_call'])){
             switch ($_POST['ajax_call']){
                 case 'edit':
-                    $data = $_POST['data'];
-
-                    $entityManager->getRepository('Employee')->findBy(array('id' => $data));
-                    $entityManager->getRepository('Employee')->save($employees);
+//                    $data = parse_str($_POST['data']);
+//
+//                    $entityManager->getRepository('Employee')->findBy(array('id' => $id));
+//                    $entityManager->save($employees);
                     break;
                 case 'create':
-                    $entityManager->getRepository('Employee')->save($employees);
+                    parse_str($_POST['data'], $data);
+
+                    $newEmployee = new Entity('employee', $data);
+                    
+                    $entityManager->save($newEmployee);
+
+                    exit;
                     break;
                 case 'delete':
-                    $employee = $entityManager->getRepository('Employee')->findBy(array('id' => $_GET['id']));
-                    $entityManager->getRepository('Employee')->delete($employee);
+//                    $employee = $entityManager->getRepository('Employee')->findBy(array('id' => $_GET['id']));
+//                    $entityManager->delete($employee);
                     break;
             }
         } else {
-            $employees = $entityManager->getRepository('Employee')->findOneBy(array());
+            $employees = $entityManager->getRepository('Employee')->findBy(array());
 
             return array(
                 'employees' => $employees

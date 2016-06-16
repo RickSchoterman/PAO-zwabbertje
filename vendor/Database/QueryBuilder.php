@@ -15,7 +15,7 @@ class QueryBuilder
                 $indexes .= ', ';
             }
 
-            $indexes = '`' . $index . '`';
+            $indexes .= '`' . $index . '`';
 
             if($values == '') {
                 $values = '"' . $value . '"';

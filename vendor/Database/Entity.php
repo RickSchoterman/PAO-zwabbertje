@@ -14,7 +14,7 @@ class Entity {
 
     public function __call($name, $arguments) {
         $method = substr($name, 0, 3);
-        $property = substr($name, 3, strlen($name));
+        $property = substr(lcfirst($name), 3, strlen($name));
 
         switch($method) {
             case 'set':
@@ -55,12 +55,12 @@ class Entity {
         if(array_key_exists($name, $this->table)) {
             $this->table[$name] = $value;
         } else {
-            echo 'undefined property';
+            echo 'undefined property '.$name;
         }
     }
 
     public function __properties() {
-        return get_object_vars($this);
+        return $this->table;
     }
 }
 

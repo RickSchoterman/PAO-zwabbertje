@@ -2,6 +2,7 @@
 
 namespace Main\src\Controller;
 
+use Database\Services\EntityManager;
 use Library\ControllerModel;
 use Mvc\ViewModel;
 use User\Authentication;
@@ -45,6 +46,39 @@ class LoginController extends ControllerModel {
         $userManager->logout();
 
         $router->redirect(self::LOGOUT_CALLBACK_ROUTE);
+    }
+
+    public function forgotAction() {
+        if(isset($_POST['secret'])) {
+            $email = $_POST['email'];
+            $secret = md5($_POST['secret']);
+            $password = md5($_POST['password']);
+            $confirmPassword = md5($_POST['confirm_password']);
+
+            /* @var $entityManager EntityManager */
+            $entityManager = $this->getServiceLocator()->get('Database\Services\EntityManager');
+
+            if($password == $confirmPassword) {
+                $user = $entityManager->getRepository('User')->findOneBy(array(
+                    'email' => $email,
+                    'secret' => $secret,
+                ));
+
+                $user->setPassword($password);
+
+                $entityManager->save($user);
+
+                return array(
+                    'form' => false,
+                    'message' => 'Succesfully changed password',
+                );
+            }
+        }
+        
+        return array(
+            'form' => true,
+            'message' => 'Enter your earlier given secret',
+        );
     }
 }
 
